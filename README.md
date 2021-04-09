@@ -1,6 +1,9 @@
-# github-avatars-gallery
+# github-avatars-gallery-generator
 
-A naive implementation that collects the avatars of all conributors of a Github repo and makes a gallery SVG for you.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)
+![PyPI](https://img.shields.io/pypi/v/github-avatars-gallery-generator?style=flat-square)
+
+A naive implementation that collects the avatars of all contributors of a Github repo and makes a gallery SVG for you.
 
 ## Why?
 
