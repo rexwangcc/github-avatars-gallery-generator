@@ -11,6 +11,9 @@ A naive implementation that collects the avatars of all contributors of a Github
 pip install github-avatars-gallery-generator
 ```
 
+_I build and upload from my macOS and Ubuntu (docker container) myself without a CI service, so
+I cannot tell if this will work for other platforms yet._
+
 ## Why?
 
 The layout is inspired by [Open Collective](https://opencollective.com) 's ability to display contributors as well as Github's own sponsors page.
