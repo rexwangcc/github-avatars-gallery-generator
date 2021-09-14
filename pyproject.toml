@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "github-avatars-gallery-generator"
-version = "0.1.0"
+version = "0.2.0"
 description = "Collect the avatars of all contributors of a Github repo and make a gallery"
 authors = ["rexwangcc <rexwangcc@gmail.com>"]
 license = "MIT"
