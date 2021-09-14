@@ -34,6 +34,7 @@ TODO:
 import argparse
 import base64
 import io
+import random
 import sys
 from typing import List
 
@@ -65,7 +66,7 @@ class DefaultHelpParser(argparse.ArgumentParser):
 
 
 @retry(stop=stop_after_attempt(3))
-def get_all_contributor_avatars_for_repo(organization: str, repo: str) -> List[dict]:
+def get_all_contributor_avatars_for_repo(organization: str, repo: str, shuffle: bool = False) -> List[dict]:
     """Return a list of contributors, sorted on the number of contributions,
     loop over all pages with 100 per page but ignore anonymous users."""
     url = f"https://api.github.com/repos/{organization}/{repo}/contributors"
@@ -76,6 +77,8 @@ def get_all_contributor_avatars_for_repo(organization: str, repo: str) -> List[d
     while "next" in response.links.keys():
         response = requests.get(response.links["next"]["url"], headers=headers, params=params)
         all_contributors.extend(response.json())
+    if shuffle:
+        random.shuffle(all_contributors)
     return all_contributors
 
 
@@ -141,6 +144,11 @@ def main(arguments=None):
         type=int,
         metavar="\b",
     )
+    parser.add_argument(
+        "--shuffle",
+        action="store_true",
+        help="Whether to shuffle avatars, otherwise they are sorted by contributions",
+    )
 
     args = parser.parse_args(arguments)
 
@@ -154,7 +162,7 @@ def main(arguments=None):
     elements = ""
 
     # loop over all contributors of the repository
-    all_contributors = get_all_contributor_avatars_for_repo(args.organization, args.repo)
+    all_contributors = get_all_contributor_avatars_for_repo(args.organization, args.repo, args.shuffle)
     for contributor in tqdm(all_contributors, desc='Gallery generation progress'):
         # grab the avatar and the html url to the contributor
         avatar, html_url = url_to_image(contributor["avatar_url"]), contributor["html_url"]
